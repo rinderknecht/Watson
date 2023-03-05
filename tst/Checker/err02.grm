@@ -1,0 +1,39 @@
+%token ident concr non_terminal
+
+%start Grammar
+
+%%
+
+Grammar ::= ["%token" ident+ ";"] Rule+
+;
+
+Rule ::= ident "::=" Production ";"
+;
+
+Production ::= {Right_hand_side "|" ...}+
+;
+
+Right_hand_side ::= Token+
+;
+
+Token ::= "(" Right_hand_side ")" Exp 
+       | Word 
+       | "[" Right_hand_side "]"
+       | "{" non_terminal Terminal "..." "}" Exp
+       | "%empty"
+;
+
+Exp ::= "+"
+     | "*"
+;
+
+Word ::= Terminal
+      | non_terminal
+;
+
+Terminal ::= ident
+          | concr
+;
+
+Exp ::= "#"
+;

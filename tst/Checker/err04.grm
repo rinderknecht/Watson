@@ -1,0 +1,15 @@
+%token a b
+
+%start Z
+
+%%
+
+Z ::= b B C | a "," | B C | b*
+;
+
+B ::= %empty
+;
+
+C ::= b*
+;
+

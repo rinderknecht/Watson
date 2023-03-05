@@ -1,0 +1,58 @@
+%token<l5,c7-15> concrete
+%token<l5,c16-24> terminal
+%token<l5,c25-37> non_terminal
+%start Grammar
+
+%%
+
+Grammar<l19,c0-7> ::=
+  ("%token"<l19,c20-21> (terminal<l19,c22-30>)+<l19,c22-31> ";"<l19,c34-35>)*<l19,c12-37> "%start"<l20,c19-20> non_terminal<l20,c21-33> "%%"<l21,c15-16> (Rule<l22,c12-16>)+<l22,c12-17>
+;
+
+Rule<l25,c0-4> ::=
+  non_terminal<l25,c9-21> "::="<l25,c26-27> Production<l25,c28-38> ";"<l25,c41-42>
+;
+
+Production<l28,c0-10> ::=
+  {Outermost_rhs<l28,c16-29> "|"<l28,c32-33>...}+<l28,c15-39>
+;
+
+Outermost_rhs<l31,c0-13> ::=
+  (Rhs_item<l31,c18-26>)+<l31,c18-27>
+| "%empty"<l31,c37-38>
+;
+
+Inner_rhs<l34,c0-9> ::=
+  (Rhs_item<l34,c14-22>)+<l34,c14-23>
+;
+
+Rhs_item<l37,c0-8> ::=
+  "("<l37,c15-16> Inner_rhs<l37,c17-26> ")"<l37,c29-30> Exp<l37,c31-34>
+| Word<l38,c9-13>
+| "["<l39,c11-12> Inner_rhs<l39,c13-22> "]"<l39,c25-26>
+| "{"<l40,c11-12> Word<l40,c13-17> Terminal<l40,c18-26> "..."<l40,c31-32> "}"<l40,c35-36> Exp<l40,c37-40>
+;
+
+Exp<l43,c0-3> ::=
+  "+"<l43,c10-11>
+| "*"<l44,c9-10>
+;
+
+Word<l47,c0-4> ::=
+  Terminal<l47,c9-17>
+| non_terminal<l48,c8-20>
+;
+
+Terminal<l51,c0-8> ::=
+  terminal<l51,c13-21>
+| concrete<l52,c12-20>
+;
+
+X<l55,c0-1> ::=
+  terminal<l55,c6-14> [Y<l55,c16-17> [terminal<l55,c19-27>]<l55,c18-28> | Terminal<l55,c31-39>]<l55,c15-40>
+;
+
+Y<l58,c0-1> ::=
+  %empty<l58,c6-12>
+;
+

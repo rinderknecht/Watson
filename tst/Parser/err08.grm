@@ -1,0 +1,11 @@
+%token a b c
+
+%start A
+
+%%
+
+A ::= a [A b | %empty] b
+;
+
+B ::= b
+;

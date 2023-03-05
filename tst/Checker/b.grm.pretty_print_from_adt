@@ -1,0 +1,23 @@
+%token a
+%token b
+%token c
+%start A
+
+%%
+
+A ::=
+A B b | (A ",")* a | b
+;
+
+B ::=
+%empty | A a | C B
+;
+
+C ::=
+C | [D [","]]
+;
+
+D ::=
+"#"*
+;
+

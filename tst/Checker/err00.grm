@@ -1,0 +1,48 @@
+(*-------------------*)
+(* Token definitions *)
+(*-------------------*)
+
+%token ident concr non_terminal
+
+(*------------------*)
+(* Axiom definition *)
+(*------------------*)
+
+%start Zorro
+
+%%
+
+(*--------------------*)
+(* Grammar definition *)
+(*--------------------*)
+
+Grammar ::= ["%token" ident+ ";"] Rule+
+;
+
+Rule ::= ident "::=" Production ";"
+;
+
+Production ::= {Right_member "|" ...}+
+;
+
+Right_member ::= Token+
+;
+
+Token ::= "(" Right_member ")" Exp   
+       | Word                
+       | "[" Right_member "]"
+       | "{" Word Terminal "..." "}" Exp
+       | "\\epsilon"
+;
+
+Exp ::= "+"
+     | "*"
+;
+
+Word ::= Terminal
+      | non_terminal
+;
+
+Terminal ::= ident
+          | concr
+;

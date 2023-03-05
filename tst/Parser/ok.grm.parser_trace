@@ -1,0 +1,58 @@
+%token concrete
+%token terminal
+%token non_terminal
+%start Grammar
+
+%%
+
+Grammar ::=
+  ("%token" terminal+ ";")* "%start" non_terminal "%%" Rule+
+;
+
+Rule ::=
+  non_terminal "::=" Production ";"
+;
+
+Production ::=
+  {Outermost_rhs "|"...}+
+;
+
+Outermost_rhs ::=
+  Rhs_item+
+| "%empty"
+;
+
+Inner_rhs ::=
+  Rhs_item+
+;
+
+Rhs_item ::=
+  "(" Inner_rhs ")" Exp
+| Word
+| "[" Inner_rhs "]"
+| "{" Word Terminal "..." "}" Exp
+;
+
+Exp ::=
+  "+"
+| "*"
+;
+
+Word ::=
+  Terminal
+| non_terminal
+;
+
+Terminal ::=
+  terminal
+| concrete
+;
+
+X ::=
+  terminal [Y [terminal] | Terminal]
+;
+
+Y ::=
+  %empty
+;
+

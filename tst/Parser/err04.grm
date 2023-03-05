@@ -1,0 +1,9 @@
+%token a
+%start A
+
+%%
+
+A ::= (a*
+;
+
+

@@ -1,0 +1,14 @@
+%token SET
+%start A
+
+%%
+
+A ::= A | B c $
+;
+ 
+B ::= {Z ";" ...}+
+;
+
+Z ::= SET
+;
+

@@ -1,0 +1,14 @@
+%token a
+%token b
+%start Z
+
+%%
+
+A ::=
+a
+;
+
+Z ::=
+([a] b)* {A "|"...}+
+;
+

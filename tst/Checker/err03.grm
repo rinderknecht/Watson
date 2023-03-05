@@ -1,0 +1,53 @@
+(*-------------------*)
+(* Token definitions *)
+(*-------------------*)
+
+%token concrete terminal non_terminal
+
+(*------------------*)
+(* Axiom definition *)
+(*------------------*)
+
+%start Grammar
+
+%%
+
+(*--------------------*)
+(* Grammar definition *)
+(*--------------------*)
+
+Grammar ::= ["%token" terminal+ ";"] 
+            "%start" non_terminal
+            "%%" 
+            Rule+
+;
+
+Rule ::= non_terminal "::=" Production ";"
+;
+
+Production ::= {Right_hand_side "|" ...}+
+;
+
+Right_hand_side ::= Token+
+;
+
+Token ::= "(" Right_hand_side ")" Exp   
+       | Word                
+       | "[" Right_hand_side "]"
+       | "{" Word Terminal "..." "}" Exp
+       | "%empty"
+;
+
+Exp ::= "+"
+     | "*"
+;
+
+Word ::= Terminal
+      | non_terminal
+;
+
+Terminal ::= terminal
+          | concrete
+;
+
+

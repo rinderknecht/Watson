@@ -1,0 +1,23 @@
+%token a b c
+
+%start Z
+
+%%
+
+Z ::= A B | ";"
+;
+
+E ::= E D | Z
+;
+
+A ::= A B | a
+;
+ 
+C ::= c
+;
+
+B ::= b
+;
+
+D ::= %empty
+;

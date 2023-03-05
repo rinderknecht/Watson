@@ -1,0 +1,20 @@
+%token a b
+
+%start Z
+
+%%
+
+Z ::= ([A %empty B] b)* {A "|" ...}+
+    | %empty %empty
+    | %empty
+    | A %empty %empty B
+;
+
+A ::= a
+;
+
+B ::= b
+;
+
+
+
